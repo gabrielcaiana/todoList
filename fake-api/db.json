@@ -1,0 +1,24 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "text": "Estudar TS",
+      "done": false
+    },
+    {
+      "id": 2,
+      "text": "Estudar JS",
+      "done": true
+    },
+    {
+      "id": 3,
+      "text": "Assistir nova serie",
+      "done": true
+    },
+    {
+      "id": 4,
+      "text": "Estudar Node.js",
+      "done": false
+    }
+  ]
+}
