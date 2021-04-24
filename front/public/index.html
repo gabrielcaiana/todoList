@@ -21,7 +21,7 @@
 
       <ul class="todos">
         <span class="todos-title">Todos</span>
-
+        <p class="laoding" v-if="loading">Carregando...</p>
         <li :class="['todo', { done: todo.done }]" v-for="todo in todos">
           <label class="checkbox-input" @click="toggleTodoStatus(todo)">
             <input type="checkbox" :checked="todo.done" />

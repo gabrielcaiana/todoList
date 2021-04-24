@@ -9,8 +9,9 @@ const app = createApp({
     todos: [],
     form: {
       text: '',
-      done: false
-    }
+      done: false,
+    },
+    loading: false,
   }),
 
   created() {
@@ -19,34 +20,52 @@ const app = createApp({
 
   methods: {
     async fetchTodos() {
-      const { data } = await apiTodos.list();
-      this.todos = data;
-      console.log(this.todos);
+      try {
+        this.loading = true;
+        const { data } = await apiTodos.list();
+        this.todos = data;
+      } catch (err) {
+        alert(err);
+      } finally {
+        this.loading = false;
+      }
     },
 
     async createdTodo() {
-      const { data } = await apiTodos.create(this.form);
-      this.todos.push(data)
-      this.form.text = ''
-      this.form.done = false
+      try {
+        const { data } = await apiTodos.create(this.form);
+        this.todos.push(data);
+        this.form.text = '';
+        this.form.done = false;
+      } catch (err) {
+        alert(err);
+      }
     },
 
     async toggleTodoStatus(todo) {
-      const { data } = await apiTodos.update({
-        ...todo,
-        done: !todo.done
-      })
+      try {
+        const { data } = await apiTodos.update({
+          ...todo,
+          done: !todo.done,
+        });
 
-      const index = this.todos.findIndex((todo) => todo.id === data.id)
+        const index = this.todos.findIndex((todo) => todo.id === data.id);
 
-      this.todos[index] = data
+        this.todos[index] = data;
+      } catch (err) {
+        alert(err);
+      }
     },
 
     async deleteTodo(id) {
-      await apiTodos.delete({ id })
-      const index = this.todos.findIndex((todo) => todo.id === id)
-      this.todos.splice(index, 1)
-    }
+      try {
+        await apiTodos.delete({ id });
+        const index = this.todos.findIndex((todo) => todo.id === id);
+        this.todos.splice(index, 1);
+      } catch (err) {
+        alert(err);
+      }
+    },
   },
 });
 
