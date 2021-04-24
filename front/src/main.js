@@ -29,6 +29,17 @@ const app = createApp({
       this.todos.push(data)
       this.form = ""
     },
+
+    async toggleTodoStatus(todo) {
+      const { data } = await apiTodos.update({
+        ...todo,
+        done: !todo.done
+      })
+
+      const index = this.todos.findIndex(({ id }) => id === data.id)
+
+      this.todos[index] = data
+    }
   },
 });
 
